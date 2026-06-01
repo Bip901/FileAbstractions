@@ -5,4 +5,18 @@
     <Nullable>enable</Nullable>
     <Version>0.1.0</Version>
   </PropertyGroup>
+
+  <PropertyGroup>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Title>FileAbstractions</Title>
+    <Authors>Ori Almagor</Authors>
+    <Description>A C# .NET library for async filesystem abstractions.</Description>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/Bip901/FileAbstractions</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/Bip901/FileAbstractions</PackageProjectUrl>
+    <RepositoryType>Git</RepositoryType>
+    <PackageTags>filesystem abstraction</PackageTags>
+    <DocumentationFile>$(MSBuildProjectDirectory)/bin/$(Configuration)/$(TargetFramework)/FileAbstractions.xml</DocumentationFile>
+  </PropertyGroup>
 </Project>
