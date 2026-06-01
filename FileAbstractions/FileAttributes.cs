@@ -3,6 +3,9 @@ using System.IO;
 
 namespace FileAbstractions;
 
+/// <summary>
+/// An abstraction of <see cref="FileSystemInfo"/>.
+/// </summary>
 public record class FileAttributes
 {
     /// <summary>
@@ -25,6 +28,9 @@ public record class FileAttributes
     /// </summary>
     public DateTimeOffset? LastAccessedTime { get; init; }
 
+    /// <summary>
+    /// Creates new <see cref="FileAttributes"/> from the given <paramref name="fileSystemInfo"/>.
+    /// </summary>
     public static FileAttributes FromFileSystemInfo(FileSystemInfo fileSystemInfo)
     {
         ulong? fileSize = null;

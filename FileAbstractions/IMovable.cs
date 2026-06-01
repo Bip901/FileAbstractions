@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace FileAbstractions;
 
+/// <summary>
+/// A file or directory which can be moved to a new location.
+/// </summary>
 public interface IMovable
 {
     /// <summary>
@@ -12,6 +15,7 @@ public interface IMovable
     /// </summary>
     /// <param name="newName">The new name and extension of this file.</param>
     /// <param name="allowOverwrite">If true, allows overwriting an existing file with the same name. Otherwise, throws an IOException if a file with the same name already exists.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
     /// <exception cref="FileNotFoundException">This file does not exist.</exception>
     /// <exception cref="IOException">There's already a file of the same name, or an IO exception occured.</exception>
     /// <exception cref="OperationCanceledException"/>
@@ -20,7 +24,10 @@ public interface IMovable
     /// <summary>
     /// Moves (renames) this file to a new location.
     /// </summary>>
+    /// <param name="newParent">The directory that should be the new parent of this file/directory after the move.</param>
+    /// <param name="newName">The new name (not the full path) that this file should have.</param>
     /// <param name="allowOverwrite">If true, allows overwriting an existing file with the same name. Otherwise, throws an IOException if a file with the same name already exists.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
     /// <exception cref="FileNotFoundException">This file does not exist.</exception>
     /// <exception cref="InvalidOperationException">When attempting to move under an incompatible parent.</exception>
     /// <exception cref="IOException">There's already a file of the same name, or an IO exception occured.</exception>

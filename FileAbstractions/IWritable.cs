@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace FileAbstractions;
 
+/// <summary>
+/// A file that can be written to.
+/// </summary>
 public interface IWritable
 {
     /// <summary>

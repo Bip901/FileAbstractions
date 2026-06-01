@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace FileAbstractions;
 
+/// <summary>
+/// A directory, which is a special file that aggregates other files within it.
+/// </summary>
 public interface IVirtualDirectory : IVirtualFileOrDirectory
 {
     /// <summary>

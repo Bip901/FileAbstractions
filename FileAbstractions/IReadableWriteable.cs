@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace FileAbstractions;
 
+/// <summary>
+/// A file that can be both read from and written to.
+/// </summary>
 public interface IReadableWriteable : IReadable, IWritable
 {
     /// <summary>

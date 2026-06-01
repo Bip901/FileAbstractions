@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace FileAbstractions;
 
+/// <summary>
+/// An object that can be read from. See also: <seealso cref="IReadableVirtualFile"/>.
+/// </summary>
 public interface IReadable
 {
     /// <summary>

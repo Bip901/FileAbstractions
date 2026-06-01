@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace FileAbstractions;
 
+/// <summary>
+/// Something that has <see cref="FileAttributes"/> which can be get and set.
+/// </summary>
 public interface IHasFileAttributes
 {
     /// <summary>
