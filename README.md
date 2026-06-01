@@ -17,5 +17,3 @@ There's a huge variety of different implementations of very similar concepts:
 * And many more.
 
 Therefore, it's logical to do the filesystem abstraction at the application layer instead of relying on the operating system, and thus these interfaces were made.
-
-This library contains only abstractions, no concrete implementations.
