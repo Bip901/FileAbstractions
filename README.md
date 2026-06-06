@@ -17,3 +17,9 @@ There's a huge variety of different implementations of very similar concepts:
 * And many more.
 
 Therefore, it's logical to do the filesystem abstraction at the application layer instead of relying on the operating system, and thus these interfaces were made.
+
+## Implementation Notes
+
+* The contract of all interfaces is to use pure virtual paths, where directories are separated with a forward slash ('/'), regardless of the operating system.
+    * Despite this, [LocalDirectory](./FileAbstractions/Implementations/LocalDirectory.cs) sanitizes '\\' on Windows to prevent unexpected behavior.
+* Special directories "." and ".." are deliberately **not** supported.
