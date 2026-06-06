@@ -58,6 +58,7 @@ public interface IVirtualDirectory : IVirtualFileOrDirectory
     /// Implementers of this interface should override the default implementation if they can short-circuit it
     /// and return a result directly, to avoid recursive virtual calls and allocating an object for each intermediate directory.
     /// </remarks>
+    /// <exception cref="ArgumentException"/>
     IVirtualDirectory GetDescendantDirectory(ReadOnlySpan<char> relativePath)
     {
         if (relativePath.IsEmpty)
@@ -76,17 +77,25 @@ public interface IVirtualDirectory : IVirtualFileOrDirectory
     /// Implementers of this interface should override the default implementation if they can short-circuit it
     /// and return a result directly, to avoid recursive virtual calls and allocating an object for each intermediate directory.
     /// </remarks>
+    /// <exception cref="ArgumentException"/>
     IVirtualFile GetDescendantFile(ReadOnlySpan<char> relativePath)
     {
         if (relativePath.IsEmpty)
         {
-            throw new ArgumentException(null, nameof(relativePath));
+            throw new ArgumentException("Path is empty", nameof(relativePath));
         }
-        if (!relativePath.Contains(PathParser.DIRECTORY_SEPARATOR_CHAR))
+        if (relativePath.EndsWith(PathParser.DIRECTORY_SEPARATOR_CHAR))
         {
-            return GetChildFile(relativePath);
+            throw new ArgumentException(
+                $"Unexpected trailing '{PathParser.DIRECTORY_SEPARATOR_CHAR}' in file path '{relativePath}'",
+                nameof(relativePath)
+            );
         }
         relativePath = PathParser.StripFirstComponent(relativePath, out ReadOnlySpan<char> firstComponent);
+        if (relativePath.IsEmpty)
+        {
+            return GetChildFile(firstComponent);
+        }
         return GetChildDir(firstComponent).GetDescendantFile(relativePath);
     }
 }
