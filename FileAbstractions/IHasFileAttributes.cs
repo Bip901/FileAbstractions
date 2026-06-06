@@ -20,7 +20,7 @@ public interface IHasFileAttributes
 
     /// <summary>
     /// Sets the filesystem attributes of this file.
-    /// Currently only the last modified time should be implemented.
+    /// Implementers may choose to ignore certain attributes.
     /// </summary>
     /// <exception cref="OperationCanceledException"/>
     /// <exception cref="FileNotFoundException">If this file does not exist.</exception>

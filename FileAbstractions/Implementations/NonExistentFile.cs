@@ -22,7 +22,12 @@ public class NonExistentFile : IVirtualFile
     }
 
     /// <inheritdoc/>
-    public Task MoveToAsync(IVirtualDirectory newParent, string newName, bool allowOverwrite, CancellationToken cancellationToken)
+    public Task MoveToAsync(
+        IVirtualDirectory newParent,
+        string newName,
+        bool allowOverwrite,
+        CancellationToken cancellationToken
+    )
     {
         throw new FileNotFoundException();
     }
