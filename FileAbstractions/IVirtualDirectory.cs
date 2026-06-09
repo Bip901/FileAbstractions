@@ -66,6 +66,10 @@ public interface IVirtualDirectory : IVirtualFileOrDirectory
             return this;
         }
         relativePath = PathParser.StripFirstComponent(relativePath, out ReadOnlySpan<char> firstComponent);
+        if (firstComponent.IsEmpty)
+        {
+            throw new ArgumentException("Empty subdirectory names are not allowed.", nameof(relativePath));
+        }
         return GetChildDir(firstComponent).GetDescendantDirectory(relativePath);
     }
 
