@@ -73,7 +73,7 @@ public interface IVirtualDirectory : IVirtualFileOrDirectory
     /// Returns the descendant file specified by the given relative path, for example a/b/c.
     /// </summary>
     /// <remarks>
-    /// The default implementation is slow.
+    /// The default implementation is slow (although not as slow if <see cref="GetDescendantDirectory"/> is overridden).
     /// Implementers of this interface should override the default implementation if they can short-circuit it
     /// and return a result directly, to avoid recursive virtual calls and allocating an object for each intermediate directory.
     /// </remarks>
@@ -84,18 +84,20 @@ public interface IVirtualDirectory : IVirtualFileOrDirectory
         {
             throw new ArgumentException("Path is empty", nameof(relativePath));
         }
-        if (relativePath.EndsWith(PathParser.DIRECTORY_SEPARATOR_CHAR))
+        int lastSeparator = relativePath.LastIndexOf(PathParser.DIRECTORY_SEPARATOR_CHAR);
+        if (lastSeparator == relativePath.Length - 1)
         {
             throw new ArgumentException(
                 $"Unexpected trailing '{PathParser.DIRECTORY_SEPARATOR_CHAR}' in file path '{relativePath}'",
                 nameof(relativePath)
             );
         }
-        relativePath = PathParser.StripFirstComponent(relativePath, out ReadOnlySpan<char> firstComponent);
-        if (relativePath.IsEmpty)
+        if (lastSeparator == -1)
         {
-            return GetChildFile(firstComponent);
+            return GetChildFile(relativePath);
         }
-        return GetChildDir(firstComponent).GetDescendantFile(relativePath);
+        ReadOnlySpan<char> parentName = relativePath[..lastSeparator];
+        ReadOnlySpan<char> fileName = relativePath[(lastSeparator + 1)..];
+        return GetDescendantDirectory(parentName).GetChildFile(fileName);
     }
 }
