@@ -102,7 +102,7 @@ public abstract class LocalFileOrDirectory(string localPath) : IMovable, IVirtua
     {
         if (name.Contains(Path.DirectorySeparatorChar) || name.Contains(Path.AltDirectorySeparatorChar))
         {
-            throw new ArgumentException("File name must not include a path separator.", nameof(name));
+            throw new ArgumentException("File name must not include a directory separator.", nameof(name));
         }
         if (name.IsEmpty)
         {
