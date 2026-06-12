@@ -20,6 +20,6 @@ Therefore, it's logical to do the filesystem abstraction at the application laye
 
 ## Implementation Notes
 
-* The contract of all interfaces is to use pure virtual paths, where directories are separated with a forward slash ('/'), regardless of the operating system.
+* The contract of all interfaces is to use [pure virtual paths](FileAbstractions/PathParser.cs), where directories are separated with a forward slash ('/'), regardless of the operating system.
     * Despite this, [LocalDirectory](./FileAbstractions/Implementations/LocalDirectory.cs) sanitizes '\\' on Windows to prevent unexpected behavior.
 * Special directories "." and ".." are deliberately **not** supported.

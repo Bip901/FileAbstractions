@@ -88,20 +88,11 @@ public interface IVirtualDirectory : IVirtualFileOrDirectory
         {
             throw new ArgumentException("Path is empty", nameof(relativePath));
         }
-        int lastSeparator = relativePath.LastIndexOf(PathParser.DIRECTORY_SEPARATOR_CHAR);
-        if (lastSeparator == relativePath.Length - 1)
-        {
-            throw new ArgumentException(
-                $"Unexpected trailing '{PathParser.DIRECTORY_SEPARATOR_CHAR}' in file path '{relativePath}'",
-                nameof(relativePath)
-            );
-        }
-        if (lastSeparator == -1)
-        {
-            return GetChildFile(relativePath);
-        }
-        ReadOnlySpan<char> parentName = relativePath[..lastSeparator];
-        ReadOnlySpan<char> fileName = relativePath[(lastSeparator + 1)..];
+        ReadOnlySpan<char> parentName = PathParser.GetParentDirectory(
+            relativePath,
+            out ReadOnlySpan<char> fileName,
+            allowTrailingSeparator: false
+        );
         return GetDescendantDirectory(parentName).GetChildFile(fileName);
     }
 }
