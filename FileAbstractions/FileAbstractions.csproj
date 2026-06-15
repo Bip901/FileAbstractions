@@ -17,6 +17,14 @@
     <PackageProjectUrl>https://github.com/Bip901/FileAbstractions</PackageProjectUrl>
     <RepositoryType>Git</RepositoryType>
     <PackageTags>filesystem abstraction</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <DocumentationFile>$(MSBuildProjectDirectory)/bin/$(Configuration)/$(TargetFramework)/FileAbstractions.xml</DocumentationFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 </Project>
