@@ -96,6 +96,7 @@ public class PathParserTests
     [InlineData("/", "/", "")]
     [InlineData("a/b", "a", "b")]
     [InlineData("a/b", "", "a/b")]
+    [InlineData("", "", "")]
     public void GetRelativePath_ReturnsCorrectPath(string path, string potentialParent, string expected)
     {
         ReadOnlySpan<char> result = PathParser.GetRelativePath(path.AsSpan(), potentialParent.AsSpan());
