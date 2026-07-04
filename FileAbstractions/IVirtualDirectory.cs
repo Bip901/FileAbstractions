@@ -15,6 +15,15 @@ public interface IVirtualDirectory : IVirtualFileOrDirectory
     /// Returns the child file or directory with the given name.
     /// </summary>
     /// <exception cref="FileNotFoundException"/>
+    /// <exception cref="NotSupportedException"/>
+    /// <remarks>
+    /// This method will be deprecated in a future release and should not be implemented.
+    /// The point of this API is to get an instance in a non-async way, where the caller only
+    /// needs to use methods of <see cref="IVirtualFileOrDirectory"/> and doesn't know (or care) whether the item is a file
+    /// or a directory. Since I don't want to return a concrete instance that implements <see cref="IVirtualFileOrDirectory"/>
+    /// but is neither a <see cref="IVirtualFile"/> nor a <see cref="IVirtualDirectory"/>, this requires querying the filesystem
+    /// to decide which concrete instance to return. In non-local filesystems, this cannot be achieved in a blocking (not async) way.
+    /// </remarks>
     IVirtualFileOrDirectory GetExistingChild(ReadOnlySpan<char> name);
 
     /// <summary>
