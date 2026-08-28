@@ -53,11 +53,11 @@ public class LocalDirectory(string localPath) : LocalFileOrDirectory(localPath),
         string localPath = Path.Join(LocalPath, name);
         if (File.Exists(localPath))
         {
-            return new LocalFile(localPath);
+            return NewFile(localPath);
         }
         else if (Directory.Exists(localPath))
         {
-            return new LocalDirectory(localPath);
+            return NewDir(localPath);
         }
         throw new FileNotFoundException();
     }
@@ -66,14 +66,14 @@ public class LocalDirectory(string localPath) : LocalFileOrDirectory(localPath),
     public IVirtualFile GetChildFile(ReadOnlySpan<char> name)
     {
         SanitizeName(name);
-        return new LocalFile(Path.Join(LocalPath, name));
+        return NewFile(Path.Join(LocalPath, name));
     }
 
     /// <inheritdoc/>
     public IVirtualDirectory GetChildDir(ReadOnlySpan<char> name)
     {
         SanitizeName(name);
-        return new LocalDirectory(Path.Join(LocalPath, name));
+        return NewDir(Path.Join(LocalPath, name));
     }
 
     /// <inheritdoc/>
@@ -87,7 +87,7 @@ public class LocalDirectory(string localPath) : LocalFileOrDirectory(localPath),
         string newDirPath = Path.Join(LocalPath, name);
         DirectoryInfo dirInfo = Directory.CreateDirectory(newDirPath);
         SetAttributes(dirInfo, attributes);
-        return Task.FromResult((IVirtualDirectory)new LocalDirectory(newDirPath));
+        return Task.FromResult((IVirtualDirectory)NewDir(newDirPath));
     }
 
     /// <inheritdoc/>
@@ -104,14 +104,24 @@ public class LocalDirectory(string localPath) : LocalFileOrDirectory(localPath),
     public IVirtualDirectory GetDescendantDirectory(ReadOnlySpan<char> relativePath)
     {
         SanitizeRelativePath(relativePath);
-        return new LocalDirectory(Path.Join(LocalPath, relativePath));
+        return NewDir(Path.Join(LocalPath, relativePath));
     }
 
     /// <inheritdoc/>
     public IVirtualFile GetDescendantFile(ReadOnlySpan<char> relativePath)
     {
         SanitizeRelativePath(relativePath);
-        return new LocalFile(Path.Join(LocalPath, relativePath));
+        return NewFile(Path.Join(LocalPath, relativePath));
+    }
+
+    private LocalFile NewFile(string path)
+    {
+        return new LocalFile(path) { FileShare = FileShare };
+    }
+
+    private LocalDirectory NewDir(string path)
+    {
+        return new LocalDirectory(path) { FileShare = FileShare };
     }
 
     private static void SanitizeRelativePath(ReadOnlySpan<char> relativePath)

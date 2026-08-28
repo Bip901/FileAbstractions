@@ -21,6 +21,12 @@ public abstract class LocalFileOrDirectory(string localPath) : IMovable, IVirtua
     /// </summary>
     public string LocalPath { get; private set; } = localPath;
 
+    /// <summary>
+    /// The file share settings to use for this file (or files in this directory).
+    /// Updates apply only to descendant objects created <b>after</b> setting this property, since it's copied by value.
+    /// </summary>
+    public FileShare FileShare { get; set; } = FileShare.None;
+
     /// <inheritdoc/>
     public Task RenameAsync(string newName, bool allowOverwrite, CancellationToken cancellationToken)
     {
