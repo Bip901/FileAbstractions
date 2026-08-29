@@ -2,6 +2,7 @@
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using FileAbstractions.Implementations.Streams;
 
 namespace FileAbstractions.Implementations;
 
@@ -61,6 +62,6 @@ public class LocalFile(string localPath)
         {
             throw new ArgumentOutOfRangeException(nameof(fileMode));
         }
-        return Task.FromResult((Stream)File.Open(LocalPath, fileMode, fileAccess, FileShare));
+        return Task.FromResult((Stream)new ConcurrentFileStream(LocalPath, fileMode, fileAccess, FileShare));
     }
 }
