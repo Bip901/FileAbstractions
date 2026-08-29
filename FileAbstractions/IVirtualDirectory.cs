@@ -11,6 +11,7 @@ namespace FileAbstractions;
 /// </summary>
 public interface IVirtualDirectory : IVirtualFileOrDirectory
 {
+    // TODO: Replace with an async API or find another solution
     /// <summary>
     /// Returns the child file or directory with the given name.
     /// </summary>
