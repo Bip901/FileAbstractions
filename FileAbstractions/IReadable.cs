@@ -17,5 +17,5 @@ public interface IReadable
     /// <exception cref="ArgumentOutOfRangeException">The given file mode is not supported.</exception>
     /// <exception cref="FileNotFoundException">The file does not exist.</exception>
     /// <exception cref="IOException"/>
-    Task<Stream> OpenReadAsync(FileMode fileMode, CancellationToken cancellationToken);
+    Task<Stream> OpenReadAsync(FileMode fileMode, StreamOptions options, CancellationToken cancellationToken);
 }

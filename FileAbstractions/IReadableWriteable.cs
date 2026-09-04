@@ -16,19 +16,24 @@ public interface IReadableWriteable : IReadable, IWritable
     /// <exception cref="ArgumentOutOfRangeException">The given file mode is not supported.</exception>
     /// <exception cref="FileNotFoundException">The file does not exist.</exception>
     /// <exception cref="IOException"/>
-    Task<Stream> OpenAsync(FileMode fileMode, FileAccess fileAccess, CancellationToken cancellationToken)
+    Task<Stream> OpenAsync(
+        FileMode fileMode,
+        FileAccess fileAccess,
+        StreamOptions options,
+        CancellationToken cancellationToken
+    )
     {
-        if (fileAccess == FileAccess.Read)
+        if (fileAccess == FileAccess.ReadWrite)
         {
-            return OpenReadAsync(fileMode, cancellationToken);
+            return OpenReadWriteAsync(fileMode, options, cancellationToken);
         }
         else if (fileAccess == FileAccess.Write)
         {
-            return OpenWriteAsync(fileMode, cancellationToken);
+            return OpenWriteAsync(fileMode, options, cancellationToken);
         }
         else
         {
-            return OpenReadWriteAsync(fileMode, cancellationToken);
+            return OpenReadAsync(fileMode, options, cancellationToken);
         }
     }
 
@@ -39,5 +44,5 @@ public interface IReadableWriteable : IReadable, IWritable
     /// <exception cref="ArgumentOutOfRangeException">The given file mode is not supported.</exception>
     /// <exception cref="FileNotFoundException">The file does not exist.</exception>
     /// <exception cref="IOException"/>
-    Task<Stream> OpenReadWriteAsync(FileMode fileMode, CancellationToken cancellationToken);
+    Task<Stream> OpenReadWriteAsync(FileMode fileMode, StreamOptions options, CancellationToken cancellationToken);
 }

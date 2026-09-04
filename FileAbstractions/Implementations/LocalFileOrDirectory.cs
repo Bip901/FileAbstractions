@@ -79,7 +79,6 @@ public abstract class LocalFileOrDirectory(string localPath) : IMovable, IVirtua
     /// </summary>
     protected static void SetAttributes(FileSystemInfo fileSystemInfo, FileAttributes attributes)
     {
-        // When adding supported attributes here, don't forget to check them in LocalFile.OpenAsync.
         if (attributes.FileSize != null && fileSystemInfo is FileInfo fileInfo)
         {
             using FileStream stream = fileInfo.Open(FileMode.Open, FileAccess.Write);

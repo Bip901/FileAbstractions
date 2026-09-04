@@ -17,5 +17,5 @@ public interface IWritable
     /// <exception cref="ArgumentOutOfRangeException">The given file mode is not supported.</exception>
     /// <exception cref="FileNotFoundException">The file does not exist.</exception>
     /// <exception cref="IOException"/>
-    Task<Stream> OpenWriteAsync(FileMode fileMode, CancellationToken cancellationToken);
+    Task<Stream> OpenWriteAsync(FileMode fileMode, StreamOptions options, CancellationToken cancellationToken);
 }

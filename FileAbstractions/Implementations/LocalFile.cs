@@ -38,25 +38,34 @@ public class LocalFile(string localPath)
     }
 
     /// <inheritdoc/>
-    public Task<Stream> OpenReadAsync(FileMode fileMode, CancellationToken cancellationToken)
+    public Task<Stream> OpenReadAsync(FileMode fileMode, StreamOptions options, CancellationToken cancellationToken)
     {
-        return OpenAsync(fileMode, FileAccess.Read, cancellationToken);
+        return OpenAsync(fileMode, FileAccess.Read, options, cancellationToken);
     }
 
     /// <inheritdoc/>
-    public Task<Stream> OpenWriteAsync(FileMode fileMode, CancellationToken cancellationToken)
+    public Task<Stream> OpenWriteAsync(FileMode fileMode, StreamOptions options, CancellationToken cancellationToken)
     {
-        return OpenAsync(fileMode, FileAccess.Write, cancellationToken);
+        return OpenAsync(fileMode, FileAccess.Write, options, cancellationToken);
     }
 
     /// <inheritdoc/>
-    public Task<Stream> OpenReadWriteAsync(FileMode fileMode, CancellationToken cancellationToken)
+    public Task<Stream> OpenReadWriteAsync(
+        FileMode fileMode,
+        StreamOptions options,
+        CancellationToken cancellationToken
+    )
     {
-        return OpenAsync(fileMode, FileAccess.ReadWrite, cancellationToken);
+        return OpenAsync(fileMode, FileAccess.ReadWrite, options, cancellationToken);
     }
 
     /// <inheritdoc/>
-    public Task<Stream> OpenAsync(FileMode fileMode, FileAccess fileAccess, CancellationToken cancellationToken)
+    public Task<Stream> OpenAsync(
+        FileMode fileMode,
+        FileAccess fileAccess,
+        StreamOptions options,
+        CancellationToken cancellationToken
+    )
     {
         if (fileAccess == FileAccess.Read && fileMode != FileMode.OpenOrCreate && fileMode != FileMode.Open)
         {
