@@ -93,7 +93,7 @@ public class LocalDirectory(string localPath) : LocalFileOrDirectory(localPath),
     /// <inheritdoc/>
     public async IAsyncEnumerable<FileEntry> ListChildren([EnumeratorCancellation] CancellationToken cancellationToken)
     {
-        foreach (var fileSystemInfo in new DirectoryInfo(LocalPath).GetFileSystemInfos())
+        foreach (FileSystemInfo fileSystemInfo in new DirectoryInfo(LocalPath).EnumerateFileSystemInfos())
         {
             cancellationToken.ThrowIfCancellationRequested();
             yield return FileEntry.FromFileSystemInfo(fileSystemInfo);
