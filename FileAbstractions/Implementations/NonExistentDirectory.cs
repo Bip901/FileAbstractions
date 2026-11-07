@@ -79,4 +79,10 @@ public class NonExistentDirectory : IVirtualDirectory
     {
         throw new DirectoryNotFoundException();
     }
+
+    /// <inheritdoc/>
+    public Task<FileSystemAttributes> GetFileSystemAttributesAsync(CancellationToken cancellationToken)
+    {
+        throw new DirectoryNotFoundException();
+    }
 }

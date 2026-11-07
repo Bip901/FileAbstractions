@@ -102,6 +102,26 @@ public abstract class LocalFileOrDirectory(string localPath) : IMovable, IVirtua
     /// <inheritdoc/>
     public abstract Task DeleteAsync(CancellationToken cancellationToken);
 
+    /// <inheritdoc/>
+    public Task<FileSystemAttributes> GetFileSystemAttributesAsync(CancellationToken cancellationToken)
+    {
+        try
+        {
+            return Task.FromResult(FileSystemAttributes.FromDriveInfo(new DriveInfo(LocalPath)));
+        }
+        catch (DriveNotFoundException ex)
+        {
+            if (this is LocalFile)
+            {
+                throw new FileNotFoundException($"File not found: {LocalPath}", ex);
+            }
+            else
+            {
+                throw new DirectoryNotFoundException($"Directory not found: {LocalPath}", ex);
+            }
+        }
+    }
+
     /// <exception cref="ArgumentException">The name was invalid.</exception>
     public static void SanitizeName(ReadOnlySpan<char> name)
     {

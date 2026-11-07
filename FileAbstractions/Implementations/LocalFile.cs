@@ -71,6 +71,8 @@ public class LocalFile(string localPath)
         {
             throw new ArgumentOutOfRangeException(nameof(fileMode));
         }
-        return Task.FromResult((Stream)new ConcurrentFileStream(LocalPath, fileMode, fileAccess, FileShare));
+        return Task.FromResult(
+            (Stream)new ConcurrentFileStream(LocalPath, fileMode, fileAccess, FileShare)
+        );
     }
 }

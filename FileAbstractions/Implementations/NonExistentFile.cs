@@ -22,6 +22,12 @@ public class NonExistentFile : IVirtualFile
     }
 
     /// <inheritdoc/>
+    public Task<FileSystemAttributes> GetFileSystemAttributesAsync(CancellationToken cancellationToken)
+    {
+        throw new FileNotFoundException();
+    }
+
+    /// <inheritdoc/>
     public Task MoveToAsync(
         IVirtualDirectory newParent,
         string newName,
