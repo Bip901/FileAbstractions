@@ -11,22 +11,6 @@ namespace FileAbstractions;
 /// </summary>
 public interface IVirtualDirectory : IVirtualFileOrDirectory
 {
-    // TODO: Replace with an async API or find another solution
-    /// <summary>
-    /// Returns the child file or directory with the given name.
-    /// </summary>
-    /// <exception cref="FileNotFoundException"/>
-    /// <exception cref="NotSupportedException"/>
-    /// <remarks>
-    /// This method will be deprecated in a future release and should not be implemented.
-    /// The point of this API is to get an instance in a non-async way, where the caller only
-    /// needs to use methods of <see cref="IVirtualFileOrDirectory"/> and doesn't know (or care) whether the item is a file
-    /// or a directory. Since I don't want to return a concrete instance that implements <see cref="IVirtualFileOrDirectory"/>
-    /// but is neither a <see cref="IVirtualFile"/> nor a <see cref="IVirtualDirectory"/>, this requires querying the filesystem
-    /// to decide which concrete instance to return. In non-local filesystems, this cannot be achieved in a blocking (not async) way.
-    /// </remarks>
-    IVirtualFileOrDirectory GetExistingChild(ReadOnlySpan<char> name);
-
     /// <summary>
     /// Returns an <see cref="IVirtualFile"/> that represents this directory's child named <paramref name="name"/>.
     /// The file may or may not exist at the time this method is called.
@@ -40,6 +24,20 @@ public interface IVirtualDirectory : IVirtualFileOrDirectory
     /// </summary>
     /// <exception cref="ArgumentException"><paramref name="name"/> is not a valid file name, e.g. empty.</exception>
     IVirtualDirectory GetChildDir(ReadOnlySpan<char> name);
+
+    /// <summary>
+    /// Returns the child file or directory with the given name.
+    /// If you already know whether you expect a file or a directory, use <see cref="GetChildFile"/> or <see cref="GetChildDir"/> instead.
+    /// </summary>
+    /// <exception cref="FileNotFoundException"/>
+    /// <exception cref="NotSupportedException"/>
+    /// <remarks>
+    /// The returned instance is not guaranteed to be a <see cref="IVirtualFile"/> <b>nor</b> a <see cref="IVirtualDirectory"/>,
+    /// since deciding the instance type requires querying the filesystem and this method is not async.
+    /// Instead, the returned object implements <see cref="IVirtualFileOrDirectory"/> to allow operations that don't
+    /// require distinguishing between files or directories.
+    /// </remarks>
+    IVirtualFileOrDirectory GetChild(ReadOnlySpan<char> name);
 
     /// <summary>
     /// Creates an empty directory.

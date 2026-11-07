@@ -47,7 +47,7 @@ public class LocalDirectory(string localPath) : LocalFileOrDirectory(localPath),
     }
 
     /// <inheritdoc/>
-    public IVirtualFileOrDirectory GetExistingChild(ReadOnlySpan<char> name)
+    public IVirtualFileOrDirectory GetChild(ReadOnlySpan<char> name)
     {
         SanitizeName(name);
         string localPath = Path.Join(LocalPath, name);

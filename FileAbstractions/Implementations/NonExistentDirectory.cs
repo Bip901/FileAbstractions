@@ -36,7 +36,7 @@ public class NonExistentDirectory : IVirtualDirectory
     }
 
     /// <inheritdoc/>
-    public IVirtualFileOrDirectory GetExistingChild(ReadOnlySpan<char> name)
+    public IVirtualFileOrDirectory GetChild(ReadOnlySpan<char> name)
     {
         throw new DirectoryNotFoundException();
     }
